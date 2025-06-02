@@ -154,10 +154,12 @@ export const Card = ({
   card,
   index,
   layout = false,
+  imageProps,
 }: {
   card: Card;
   index: number;
   layout?: boolean;
+  imageProps?: ImageProps;
 }) => {
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -253,42 +255,14 @@ export const Card = ({
             {card.title}
           </motion.p>
         </div>
-        <BlurImage
+        <Image
           src={card.src}
           alt={card.title}
           fill
+          {...imageProps}
           className="absolute inset-0 z-10 object-cover"
         />
       </motion.button>
     </>
-  );
-};
-
-export const BlurImage = ({
-  height,
-  width,
-  src,
-  className,
-  alt,
-  ...rest
-}: ImageProps) => {
-  const [isLoading, setLoading] = useState(true);
-  return (
-    <img
-      className={cn(
-        "h-full w-full transition duration-300",
-        isLoading ? "blur-sm" : "blur-0",
-        className,
-      )}
-      onLoad={() => setLoading(false)}
-      src={src as string}
-      width={width}
-      height={height}
-      loading="lazy"
-      decoding="async"
-      blurDataURL={typeof src === "string" ? src : undefined}
-      alt={alt ? alt : "Background of a beautiful view"}
-      {...rest}
-    />
   );
 };
