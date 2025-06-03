@@ -1,10 +1,8 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
 import { Carousel, Card } from "@/components/ui/apple-cards-carousel"; // Added Card import
-import Image from "next/image";
 
 // Define the data
 const data = [
@@ -13,23 +11,22 @@ const data = [
 		description:
 			"Técnicas especializadas para aliviar tensiones y mejorar la recuperación física.",
 		src: "/images/masaje-terapeutico.jpg",
-		href: "/servicios/masaje-terapeutico",
-		category: "Masajes",
+		
+		
 	},
 	{
 		title: "Terapia Energética",
 		description:
 			"Equilibrio energético para tu bienestar físico y emocional.",
 		src: "/images/terapia-energetica.jpg",
-		href: "/servicios/terapia-energetica",
-		category: "Terapias",
+	
 	},
 	{
 		title: "Equilibrio Interior",
 		description: "Encuentra la armonía entre cuerpo, mente y espíritu.",
 		src: "/images/equilibrio.jpg",
-		href: "/servicios/equilibrio-interior",
-		category: "Bienestar",
+		
+		
 	},
 ];
 
@@ -65,6 +62,24 @@ const ServiceCard = ({ item }) => (
 );
 
 export default function Servicios() {
+	const [itemsToShow, setItemsToShow] = useState(3);
+
+	useEffect(() => {
+		const handleResize = () => {
+			if (window.innerWidth < 768) {
+				setItemsToShow(1);
+			} else if (window.innerWidth < 1024) {
+				setItemsToShow(2);
+			} else {
+				setItemsToShow(3);
+			}
+		};
+
+		handleResize();
+		window.addEventListener('resize', handleResize);
+		return () => window.removeEventListener('resize', handleResize);
+	}, []);
+
 	const carouselItems = data.map((item, index) => (
 		<Card
 			key={index}
@@ -77,7 +92,7 @@ export default function Servicios() {
 			index={index}
 			imageProps={{
 				quality: 100,
-				sizes: "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw",
+				sizes: `(max-width: 768px) 100vw, (max-width: 1024px) 50vw, ${100 / itemsToShow}vw`,
 				priority: index === 0,
 				className: "object-cover w-full h-full",
 			}}
@@ -110,8 +125,16 @@ export default function Servicios() {
 				whileInView={{ x: 0, opacity: 1 }}
 				transition={{ duration: 0.8, ease: "easeOut" }}
 				viewport={{ amount: 0.3 }}
+				className="px-4 sm:px-6 lg:px-8"
 			>
-				<Carousel items={carouselItems} />
+				<Carousel 
+					items={carouselItems} 
+					options={{
+						itemsToShow,
+						gap: 16,
+						responsive: true
+					}}
+				/>
 			</motion.div>
 		</section>
 	);
