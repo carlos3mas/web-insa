@@ -2,7 +2,7 @@ import { FaInstagram } from 'react-icons/fa';
 
 export default function Footer() {
   return (
-    <footer className="bg-beige text-gris py-10 mt-20 border-t border-rosa/20">
+    <footer className="bg-black text-white py-10 border-t border-white/10">
       <div className="max-w-7xl mx-auto px-6 text-center space-y-4">
         {/* Título con Cormorant Garamond */}
         <h2 className="text-2xl font-serif">Shinka Terapies</h2>
@@ -15,14 +15,14 @@ export default function Footer() {
             href="https://instagram.com/shinka_terapies"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-eucalipto transition-colors text-2xl"
+            className="text-white hover:text-rosa transition-colors text-2xl"
           >
             <FaInstagram />
           </a>
         </div>
 
         {/* Copyright con Karla */}
-        <p className="text-sm font-sans">
+        <p className="text-sm font-sans text-white/80">
           &copy; {new Date().getFullYear()} Shinka Terapies. Todos los derechos reservados.
         </p>
       </div>

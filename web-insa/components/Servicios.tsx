@@ -63,15 +63,19 @@ const ServiceCard = ({ item }) => (
 
 export default function Servicios() {
 	const [itemsToShow, setItemsToShow] = useState(3);
+	const [showNavigation, setShowNavigation] = useState(true);
 
 	useEffect(() => {
 		const handleResize = () => {
 			if (window.innerWidth < 768) {
 				setItemsToShow(1);
+				setShowNavigation(false);
 			} else if (window.innerWidth < 1024) {
 				setItemsToShow(2);
+				setShowNavigation(true);
 			} else {
 				setItemsToShow(3);
+				setShowNavigation(true);
 			}
 		};
 
@@ -100,7 +104,10 @@ export default function Servicios() {
 	));
 
 	return (
-		<section id="servicios" className="py-24 bg-beige">
+		<section id="servicios" className="py-24 relative">
+			{/* Gradient Background - Bottom position with stronger beige */}
+			<div className="absolute inset-0 -z-10 h-full w-full bg-white [background:radial-gradient(125%_125%_at_50%_120%,#E8D5BD_40%,#fff_70%)]"></div>
+
 			{/* Title section */}
 			<motion.div
 				className="mb-16"
@@ -119,7 +126,7 @@ export default function Servicios() {
 				</div>
 			</motion.div>
 
-			{/* Carousel section */}
+			{/* Updated Carousel section */}
 			<motion.div
 				initial={{ x: 100, opacity: 0 }}
 				whileInView={{ x: 0, opacity: 1 }}
@@ -132,7 +139,8 @@ export default function Servicios() {
 					options={{
 						itemsToShow,
 						gap: 16,
-						responsive: true
+						responsive: true,
+						showNavigation, // Add this prop to control navigation visibility
 					}}
 				/>
 			</motion.div>
